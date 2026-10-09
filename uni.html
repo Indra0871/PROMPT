@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universidad URN - Campus Cd. Juárez & Posgrados</title>
+  
+  <!-- Carga de tipografía Montserrat para las siglas URN y FontAwesome para logos/iconos social/contacto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* VARIABLES DE COLOR Y ESTILOS GLOBALES */
+    :root {
+      --purple-main: #4d2360;
+      --purple-dark: #371746;
+      --purple-light: #6a3484;
+      --gold: #b38e46;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif; /* Tipografía básica para el cuerpo */
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    .page-section {
+      display: none;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    /* BARRA TOP SUPERIOR DELGADITA */
+    .top-bar {
+      background-color: var(--purple-dark);
+      color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 40px;
+      font-size: 13px;
+    }
+
+    .top-left, .top-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .top-bar a {
+      color: var(--white);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .top-bar a:hover {
+      opacity: 0.8;
+    }
+
+    /* NAVEGADOR PRINCIPAL */
+    header {
+      background-color: var(--purple-main);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 40px;
+    }
+
+    /* LOGO URN */
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      cursor: pointer;
+    }
+
+    .logo-urn {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 30px;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    .logo-lines {
+      width: 100%;
+      margin: 2px 0;
+    }
+
+    .logo-lines div {
+      height: 2px;
+      background-color: var(--white);
+      margin: 2px 0;
+      transform: skewX(-20deg);
+    }
+
+    .logo-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 8px;
+      color: var(--white);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    /* MENÚ DE NAVEGACIÓN HORIZONTAL */
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--gold);
+    }
+
+    /* LÍNEA BLANCA DELGADA BAJO EL NAV */
+    .nav-divider {
+      height: 2px;
+      background-color: var(--white);
+      width: 100%;
+    }
+
+    /* HERO BANNER CON IMAGEN Y FILTRO MORADO */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(77, 35, 96, 0.75); /* Filtro morado */
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+      font-size: 42px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* SECCIÓN PRINCIPAL / CUERPO */
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    /* MODALIDADES CAMPUS CD. JUÁREZ */
+    .section-title-gold {
+      color: var(--gold);
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .cards-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .modalidad-card {
+      background-color: var(--purple-main);
+      color: var(--white);
+      padding: 30px 15px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .modalidad-card span.emoji {
+      font-size: 40px;
+    }
+
+    .modalidad-card span.text {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* SECCIÓN DE POSGRADOS */
+    .section-title-purple {
+      color: var(--purple-main);
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 25px;
+    }
+
+    /* BOTONES DE SELECCIÓN DE MODALIDAD (POSGRADOS) */
+    .tabs-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .tab-btn {
+      background-color: var(--white);
+      color: var(--purple-main);
+      border: 2px solid var(--purple-main);
+      padding: 10px 25px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--purple-main);
+      color: var(--white);
+    }
+
+    /* RETÍCULAS PARA PROGRAMAS DE POSGRADO */
+    .posgrados-content {
+      display: none;
+    }
+
+    .posgrados-content.active {
+      display: block;
+    }
+
+    .grid-8x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .grid-6x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .program-card {
+      background-color: var(--purple-main);
+      color: var(--white);
+      padding: 18px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .top-bar, .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+      }
+      .cards-grid-4, .grid-8x2, .grid-6x2, .grid-2x2 {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================= -->
+  <!-- VISTA 1: CAMPUS CD. JUÁREZ (PÁGINA PRINCIPAL) -->
+  <!-- ========================================================= -->
+  <div id="page-juarez" class="page-section active">
+    
+    <!-- Header Superior Delgadito -->
+    <div class="top-bar">
+      <div class="top-left">
+        <a href="#"><span class="emoji">🚪◀️</span> Acceso</a>
+        <a href="#"><span class="emoji">✉️</span> Chihuahua</a>
+        <a href="#"><span class="emoji">✉️</span> Juárez</a>
+      </div>
+      <div class="top-right">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fas fa-phone"></i></a>
+        <a href="#"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <!-- Navegador Principal -->
+    <header>
+      <div class="navbar">
+        <div class="logo-container" onclick="showPage('page-juarez')">
+          <span class="logo-urn">URN</span>
+          <div class="logo-lines"><div></div><div></div></div>
+          <span class="logo-sub">UNIVERSIDAD</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#" onclick="showPage('page-juarez')">Inicio</a></li>
+          <li><a href="#">¿Por qué URN?</a></li>
+          <li><a href="#">Licenciaturas</a></li>
+          <li><a href="#" onclick="showPage('page-posgrados')">Posgrados</a></li>
+          <li><a href="#">Campus</a></li>
+          <li><a href="#">Servicios Escolares</a></li>
+          <li><a href="#">Unidades</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <!-- Línea blanca delgadita pegada al banner -->
+      <div class="nav-divider"></div>
+    </header>
+
+    <!-- Banner con Filtro Morado -->
+    <div class="hero-banner">
+      <div class="hero-overlay"></div>
+      <h1 class="hero-title">Campus Cd. Juárez</h1>
+    </div>
+
+    <!-- Cuerpo: Modalidades -->
+    <div class="container">
+      <h2 class="section-title-gold">Modalidad:</h2>
+      <div class="cards-grid-4">
+        <div class="modalidad-card">
+          <span class="emoji">🏫</span>
+          <span class="text">Escolarizada</span>
+        </div>
+        <div class="modalidad-card">
+          <span class="emoji">🏫</span>
+          <span class="text">Dies</span>
+        </div>
+        <div class="modalidad-card">
+          <span class="emoji">📅</span>
+          <span class="text">Sabatino</span>
+        </div>
+        <div class="modalidad-card">
+          <span class="emoji">💻</span>
+          <span class="text">Virtual</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- VISTA 2: SECCIÓN DE POSGRADOS (MESTRIAS Y POSGRADOS) -->
+  <!-- ========================================================= -->
+  <div id="page-posgrados" class="page-section">
+    
+    <!-- Header Superior Delgadito con "URN News" -->
+    <div class="top-bar">
+      <div class="top-left">
+        <a href="#"><span class="emoji">🚪◀️</span> Acceso</a>
+        <a href="#"><span class="emoji">✉️</span> Chihuahua</a>
+        <a href="#"><span class="emoji">✉️</span> Juárez</a>
+        <a href="#"><span class="emoji">📰</span> URN News</a>
+      </div>
+      <div class="top-right">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fas fa-phone"></i></a>
+        <a href="#"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <!-- Navegador Principal -->
+    <header>
+      <div class="navbar">
+        <div class="logo-container" onclick="showPage('page-juarez')">
+          <span class="logo-urn">URN</span>
+          <div class="logo-lines"><div></div><div></div></div>
+          <span class="logo-sub">UNIVERSIDAD</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#" onclick="showPage('page-juarez')">Inicio</a></li>
+          <li><a href="#">¿Por qué URN?</a></li>
+          <li><a href="#">Licenciaturas</a></li>
+          <li><a href="#" class="active" onclick="showPage('page-posgrados')">Posgrados</a></li>
+          <li><a href="#">Campus</a></li>
+          <li><a href="#">Servicios Escolares</a></li>
+          <li><a href="#">Unidades</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <!-- Línea blanca delgadita pegada al banner -->
+      <div class="nav-divider"></div>
+    </header>
+
+    <!-- Banner con Filtro Morado -->
+    <div class="hero-banner">
+      <div class="hero-overlay"></div>
+      <h1 class="hero-title">Maestrías y Posgrados</h1>
+    </div>
+
+    <!-- Cuerpo: Selección de Modalidad -->
+    <div class="container">
+      <h2 class="section-title-purple">Selecciona tu modalidad:</h2>
+
+      <!-- Pestañas de Selección -->
+      <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchModalidad('escolarizada', this)">Escolarizada</button>
+        <button class="tab-btn" onclick="switchModalidad('virtual', this)">Virtual</button>
+        <button class="tab-btn" onclick="switchModalidad('ejecutiva', this)">Ejecutiva</button>
+      </div>
+
+      <!-- CONTENIDO 1: ESCOLARIZADA (Retícula 8x2 / 15 elementos) -->
+      <div id="modalidad-escolarizada" class="posgrados-content active">
+        <div class="grid-8x2">
+          <div class="program-card">Esp. Amparo y Derecho Procesal Constitucional</div>
+          <div class="program-card">Esp. Mediación y Solución de Conflictos</div>
+          <div class="program-card">Maestría Administración de Hospitales</div>
+          <div class="program-card">Maestría Juicios Orales</div>
+          <div class="program-card">Maestría Dirección Financiera</div>
+          <div class="program-card">Maestría Dirección Organizacional</div>
+          <div class="program-card">Maestría Dirección y Producción de las Operaciones</div>
+          <div class="program-card">Maestría Estrategia Educativa</div>
+          <div class="program-card">Maestría Docencia</div>
+          <div class="program-card">Maestría Orientacion Educatica y Vocacional</div>
+          <div class="program-card">Maestría Desarrollo Turístico</div>
+          <div class="program-card">Maestría Calidad Avanzada</div>
+          <div class="program-card">Maestría Calidad Total Six Sigma</div>
+          <div class="program-card">Maestría Alta Dirección de Negocios Aéreos</div>
+          <div class="program-card" style="grid-column: span 2;">Doctorado en Educación</div>
+        </div>
+      </div>
+
+      <!-- CONTENIDO 2: VIRTUAL (Retícula 6x2 / 5 elementos) -->
+      <div id="modalidad-virtual" class="posgrados-content">
+        <div class="grid-6x2">
+          <div class="program-card">Maestría en Docencia</div>
+          <div class="program-card">Maestría en Calidad Total Seis Sigma</div>
+          <div class="program-card">Maestría en Administración de Hospitales y Sistemas de Salud</div>
+          <div class="program-card">Maestría en Juicios Orales</div>
+          <div class="program-card" style="grid-column: span 2;">Maestría en Administración Gubernamental</div>
+        </div>
+      </div>
+
+      <!-- CONTENIDO 3: EJECUTIVA (Retícula 2x2 / 4 elementos) -->
+      <div id="modalidad-ejecutiva" class="posgrados-content">
+        <div class="grid-2x2">
+          <div class="program-card">Maestría en Desarrollo Turístico</div>
+          <div class="program-card">Maestría en Seis Sigma</div>
+          <div class="program-card">Maestría en Dirección Financiera</div>
+          <div class="program-card">Maestría en Desarrollo Gubernamental</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCRIPT PARA INTERACTIVIDAD Y CAMBIO DE VISTAS -->
+  <script>
+    // Función para cambiar entre la página de Juárez y Posgrados
+    function showPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Función para cambiar las pestañas dentro de Posgrados
+    function switchModalidad(modalidad, btn) {
+      // Remover clase active de todos los botones
+      document.querySelectorAll('.tab-btn').forEach(button => {
+        button.classList.remove('active');
+      });
+      // Ocultar todos los contenidos de posgrado
+      document.querySelectorAll('.posgrados-content').forEach(content => {
+        content.classList.remove('active');
+      });
+
+      // Activar el botón y contenido seleccionado
+      btn.classList.add('active');
+      document.getElementById('modalidad-' + modalidad).classList.add('active');
+    }
+  </script>
+</body>
+</html>
